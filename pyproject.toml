@@ -1,0 +1,40 @@
+[project]
+name = "matrix256"
+version = "0.1.0"
+description = "Python reference implementation of matrix256v1 — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "LicenseRef-Proprietary"
+dependencies = []
+
+[dependency-groups]
+dev = ["ruff>=0.6"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",       # pycodestyle errors
+    "F",       # pyflakes
+    "B",       # flake8-bugbear
+    "S101",    # use of assert
+    "T20",     # flake8-print
+    "BLE",     # flake8-blind-except
+    "TID251",  # banned-api (sys.exit)
+    "D100",    # missing module docstring
+    "D101",    # missing class docstring
+    "D102",    # missing method docstring
+    "D103",    # missing function docstring
+    "D104",    # missing package docstring
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "T20", "D", "BLE", "TID251"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"sys.exit".msg = "Library code must not call sys.exit; raise an exception instead."

@@ -2,7 +2,28 @@
 
 Python reference implementation of [**matrix256v1**](https://github.com/shitwolfymakes/matrix256) — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree.
 
-Stdlib only, Python 3.10+. One of several language implementations of the same normative spec; every implementation must produce byte-identical digests on the same input.
+Zero runtime dependencies — stdlib only, Python 3.10+. One of several language implementations of the same normative spec; every implementation must produce byte-identical digests on the same input.
+
+The project's only dev dependency is `ruff` (declared under `[dependency-groups.dev]` in [`pyproject.toml`](pyproject.toml)) — used to enforce the [library discipline](#library-discipline) below. Dev deps are not installed when consumers `pip install matrix256` or `uv add matrix256`; they only land in a contributor's environment via `uv sync --group dev`.
+
+## Library discipline
+
+The library promise is: **a consumer's process must never break because of code in this package.** The rules below are enforced by `ruff` (CI runs `uv run ruff check .` on every push); a few rows are intent rules that still require code review.
+
+| Category | What's guarded | Enforced by |
+|---|---|---|
+| Exception discipline | No `assert` in library code (stripped under `python -O`), no bare `except:`, no `sys.exit`. Failures raise specific, typed exceptions — `OSError` from filesystem calls is propagated unchanged per spec §3. | `S101`, `E722`, `BLE001`, `TID251` (banned-api on `sys.exit`) |
+| Output discipline | No `print(...)`, no `logging` configuration, no writes to `sys.stdout` / `sys.stderr` from library code. A fingerprint call has no business producing output. | `T201`, `T203` (in `T20`); `logging`/direct `sys.stdout` writes are intent rules |
+| Total functions | Where reasonable, public functions are made total by construction. `_utf8_encode` substitutes U+FFFD for any lone surrogate so no caller can hand it a string that triggers `UnicodeEncodeError`. | code review |
+| Side effects at import | No top-level work beyond imports and the `VERSION` constant. Importing the package never touches the filesystem, the network, or `os.environ`. | code review |
+| Documentation | Every public class and function carries a `"""..."""` docstring. Public API stays self-describing. | `D100`–`D104` |
+
+Tests under [`tests/`](tests/) are exempt via `[tool.ruff.lint.per-file-ignores]` — they use `assert`, `print`, and `sys.exit` freely, as Python's testing idiom expects.
+
+```
+uv sync --group dev    # install ruff into a contributor venv
+uv run ruff check .    # run the discipline checks
+```
 
 ## Usage
 
