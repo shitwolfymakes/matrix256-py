@@ -1,0 +1,66 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  build:
+    name: Build sdist and wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Verify pyproject version matches tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pyver=$(uv run python -c "import tomllib,sys; print(tomllib.loads(open('pyproject.toml','rb').read().decode())['project']['version'])")
+          if [ "$tag" != "$pyver" ]; then
+            echo "::error::tag $GITHUB_REF_NAME (parsed as $tag) does not match pyproject.toml version $pyver"
+            exit 1
+          fi
+
+      - name: Build distributions
+        run: uv build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish-testpypi:
+    name: Publish to TestPyPI
+    needs: build
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-test')
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-pypi:
+    name: Publish to PyPI
+    needs: build
+    if: ${{ !contains(github.ref_name, '-rc') && !contains(github.ref_name, '-test') }}
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
