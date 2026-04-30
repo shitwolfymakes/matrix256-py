@@ -13,3 +13,6 @@ The package exposes nothing at the top level so future versions can be
 added as sibling submodules (``matrix256.v2``, …) without a "current"
 default that would silently change behavior.
 """
+
+# Copyright 2026 wolfy <wolfy@shitwolfymakes.com>
+# SPDX-License-Identifier: Apache-2.0

@@ -6,6 +6,9 @@ must stay in lockstep with the normative spec in SPEC.md. If one
 changes, the other must too.
 """
 
+# Copyright 2026 wolfy <wolfy@shitwolfymakes.com>
+# SPDX-License-Identifier: Apache-2.0
+
 from __future__ import annotations
 
 import hashlib

@@ -57,3 +57,7 @@ The script doubles as the canonical fixture generator: implementers in other lan
 - `IMPLEMENTERS.md` — practical guidance (encoding, mount handling, bridge discs)
 - `CORPUS.md` — known-good digests across real discs
 - `CONFORMANCE_FIXTURES.md` / `conformance_fixtures.json` — Tier-1 synthetic fixture suite
+
+## License
+
+Licensed under the [Apache License, Version 2.0](LICENSE). Apache 2.0 grants an explicit patent license to users and includes a patent-retaliation clause that terminates those rights for anyone who sues a contributor over the licensed work.
