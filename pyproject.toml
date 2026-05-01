@@ -7,16 +7,32 @@ name = "matrix256"
 version = "1.0.2"
 description = "Python reference implementation of matrix256v1 — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree."
 readme = "README.md"
+authors = [
+    { name = "wolfy" },
+]
 requires-python = ">=3.10"
 license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["sha256", "fingerprint", "filesystem", "hash", "matrix256"]
 classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Topic :: Security :: Cryptography",
+    "Topic :: System :: Filesystems",
 ]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/shitwolfymakes/matrix256-py"
+Repository = "https://github.com/shitwolfymakes/matrix256-py"
+Issues = "https://github.com/shitwolfymakes/matrix256-py/issues"
+Specification = "https://github.com/shitwolfymakes/matrix256"
 
 [dependency-groups]
 dev = ["ruff>=0.6"]
