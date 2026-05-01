@@ -1,5 +1,12 @@
 # matrix256-py
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![PyPI version](https://img.shields.io/pypi/v/matrix256.svg)](https://pypi.org/project/matrix256/)
+[![Python versions](https://img.shields.io/pypi/pyversions/matrix256.svg)](https://pypi.org/project/matrix256/)
+[![Downloads](https://img.shields.io/pypi/dm/matrix256.svg)](https://pypi.org/project/matrix256/)
+[![Conformance](https://github.com/shitwolfymakes/matrix256-py/actions/workflows/conformance.yml/badge.svg)](https://github.com/shitwolfymakes/matrix256-py/actions/workflows/conformance.yml)
+[![Lint](https://github.com/shitwolfymakes/matrix256-py/actions/workflows/lint.yml/badge.svg)](https://github.com/shitwolfymakes/matrix256-py/actions/workflows/lint.yml)
+
 Python reference implementation of [**matrix256v1**](https://github.com/shitwolfymakes/matrix256) — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree.
 
 Zero runtime dependencies — stdlib only, Python 3.10+. One of several language implementations of the same normative spec; every implementation must produce byte-identical digests on the same input.
