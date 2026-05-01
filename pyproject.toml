@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "matrix256"
-version = "1.0.1"
+version = "1.0.2"
 description = "Python reference implementation of matrix256v1 — a SHA-256 fingerprint over the (path, size) records of a rooted filesystem tree."
 readme = "README.md"
 requires-python = ">=3.10"
